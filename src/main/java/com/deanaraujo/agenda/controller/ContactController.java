@@ -19,6 +19,6 @@ public class ContactController {
 	
 	@GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ContactEntity searchContactById(@PathVariable Long id) {
-		return contactRepository.findById(id).get();
+		return contactRepository.searchById(id).get();
 	}
-}
+}	
