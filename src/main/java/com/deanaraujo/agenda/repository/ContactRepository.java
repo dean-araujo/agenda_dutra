@@ -13,6 +13,5 @@ import com.deanaraujo.agenda.entity.ContactEntity;
 public interface ContactRepository extends JpaRepository<ContactEntity, Long> {
 	
 	@Query("SELECT c FROM ContactEntity c WHERE c.id = :pId")
-	public Optional<ContactEntity> searchById(@Param("pId")Long id);
-	
+	public Optional<ContactEntity> findById(@Param("pId")Long id);
 }

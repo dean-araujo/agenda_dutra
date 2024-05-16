@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.deanaraujo.agenda.entity.ContactEntity;
-import com.deanaraujo.agenda.repository.ContactRepository;
+import com.deanaraujo.agenda.service.ContactService;
 
 @RestController
 @RequestMapping("/contact")
 public class ContactController {
 
 	@Autowired
-	private ContactRepository contactRepository;
+	private ContactService contactService;
 	
 	@GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ContactEntity searchContactById(@PathVariable Long id) {
-		return contactRepository.searchById(id).get();
+	public ContactEntity findById(@PathVariable Long id) {
+		return contactService.findById(id);
 	}
 }	
