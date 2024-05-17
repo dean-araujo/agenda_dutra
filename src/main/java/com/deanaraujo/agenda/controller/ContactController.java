@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.deanaraujo.agenda.dto.AgeDto;
 import com.deanaraujo.agenda.dto.ContactDto;
 import com.deanaraujo.agenda.entity.ContactEntity;
+import com.deanaraujo.agenda.exception.CalculatorConectionException;
 import com.deanaraujo.agenda.exception.ContactNotFoundException;
 import com.deanaraujo.agenda.mapper.ContactMapper;
 import com.deanaraujo.agenda.mapper.ExceptionMapper;
+import com.deanaraujo.agenda.service.CalculatorService;
 import com.deanaraujo.agenda.service.ContactService;
 
 @RestController
@@ -22,6 +25,9 @@ public class ContactController {
 
 	@Autowired
 	private ContactService contactService;
+	
+	@Autowired
+	private CalculatorService calculatorService;
 	
 	@GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> findById(@PathVariable Long id) {
@@ -32,12 +38,22 @@ public class ContactController {
 		
 		try {
 			contactEntity = contactService.findById(id);
+			
+			AgeDto ageDto = calculatorService.ageCalculator(contactEntity.getBirthDate());
+			
 			ContactDto contactDto = ContactMapper.contactEntityToContactDto(contactEntity);
+			
+			contactDto.setIAge(ageDto.getAge());
+			
 			status = HttpStatus.OK;
 			response = ResponseEntity.status(status).body(contactDto);
 			return response;
 		} catch (ContactNotFoundException e) {
 			status = HttpStatus.NOT_FOUND;
+			response = ResponseEntity.status(status).body(ExceptionMapper.exceptionToExceptionDto(status, e));
+			return response;
+		} catch (CalculatorConectionException e ) {
+			status = HttpStatus.EXPECTATION_FAILED;
 			response = ResponseEntity.status(status).body(ExceptionMapper.exceptionToExceptionDto(status, e));
 			return response;
 		} catch (Exception e ) {
