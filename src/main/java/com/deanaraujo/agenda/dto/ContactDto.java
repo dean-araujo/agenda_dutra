@@ -6,6 +6,7 @@ public class ContactDto {
 	private String name;
 	private String cellphone;
 	private String email;
+	private Integer age;
 	
 	public Long getId() {
 		return id;
@@ -39,8 +40,17 @@ public class ContactDto {
 		this.email = email;
 	}
 
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setIAge(Integer age) {
+		this.age = age;
+	}
+
 	@Override
 	public String toString() {
-		return "ContactDto [id=" + id + ", name=" + name + ", cellphone=" + cellphone + ", email=" + email + "]";
+		return "ContactDto [id=" + id + ", name=" + name + ", cellphone=" + cellphone + ", email=" + email + ", age="
+				+ age + "]";
 	}
 }

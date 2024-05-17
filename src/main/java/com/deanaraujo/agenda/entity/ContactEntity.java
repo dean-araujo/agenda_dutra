@@ -1,11 +1,14 @@
 package com.deanaraujo.agenda.entity;
 
+import java.util.Date;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class ContactEntity {
@@ -17,6 +20,10 @@ public class ContactEntity {
 	private String name;
 	private String cellphone;
 	private String email;
+	
+	@Temporal(TemporalType.DATE)
+	private Date birthDate;
+	
 	
 	public Long getId() {
 		return id;
@@ -50,6 +57,14 @@ public class ContactEntity {
 		this.email = email;
 	}
 	
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -69,6 +84,7 @@ public class ContactEntity {
 	
 	@Override
 	public String toString() {
-		return "ContactEntity [id=" + id + ", name=" + name + ", cellphone=" + cellphone + ", email=" + email + "]";
+		return "ContactEntity [id=" + id + ", name=" + name + ", cellphone=" + cellphone + ", email=" + email
+				+ ", birthDate=" + birthDate + "]";
 	}	
 }

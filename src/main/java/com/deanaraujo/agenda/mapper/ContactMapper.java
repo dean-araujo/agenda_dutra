@@ -14,5 +14,4 @@ public class ContactMapper {
 		contactDto.setName(contactEntity.getName());
 		return contactDto;
 	}
-	
 }

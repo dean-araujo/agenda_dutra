@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.deanaraujo.agenda.entity.ContactEntity;
+import com.deanaraujo.agenda.exception.ContactNotFoundException;
 import com.deanaraujo.agenda.repository.ContactRepository;
 
 @Service
@@ -14,14 +15,14 @@ public class ContactService {
 	@Autowired
 	ContactRepository contactRepository;
 	
-	public ContactEntity findById(Long id){
+	public ContactEntity findById(Long id) throws Exception{
 		
 		Optional<ContactEntity> optionalContactEntity = contactRepository.findById(id);
 		
 		ContactEntity contactEntity;
 		
 		if (optionalContactEntity.isEmpty()) {
-			contactEntity = new ContactEntity();
+			throw new ContactNotFoundException("Contato não encontrado para o id " + id.toString());
 		} else {
 			contactEntity = optionalContactEntity.get();
 		}
